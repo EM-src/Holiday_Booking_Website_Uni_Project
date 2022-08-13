@@ -1,0 +1,45 @@
+/* Header and navigation area style */
+
+header {
+    background-color: #367DB9;
+  }
+
+.headerGrid {
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 160px 2fr 1fr;
+    grid-template-areas:
+        "img h1 div"
+        "nav nav nav"
+}
+
+img {  
+    grid-area: img;
+    width: 150px;
+    height: 150px;
+ }
+
+ h1 {
+    grid-area: h1;
+    color: #FFFFFF;
+    
+  }
+
+#logIn a {
+    grid-area: div;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    background: #FFFFFF;
+    display: block;
+    border-radius: 25px;
+    border: 2px solid #000000;
+    width: 5em;
+    
+}
+
+nav {
+    grid-area: nav;
+    background-color: #000000;
+}
