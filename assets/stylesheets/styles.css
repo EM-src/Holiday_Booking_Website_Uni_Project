@@ -13,7 +13,7 @@ header {
         "nav nav nav"
 }
 
-img {  
+header img {
     grid-area: img;
     width: 110px;
     height: 110px;
@@ -81,13 +81,103 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/*Home page main content style*/
+main {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+      "ol img"
+}
+
 main img {
-  height: 500px;
-  width: 952px;
+  grid-area: img;
+  height: 98.54%;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .activities {
-  float: left;
-  width: 30%;
+  grid-area: ol;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   border: 2px solid #000000;
+}
+
+/*Footer style*/
+footer {
+  margin-top: 0px;
+  background-color: #000000;
+  text-align: center;
+  text-decoration: none;
+}
+
+footer li {
+  display: inline-block;
+  padding-right: 60px;
+}
+
+footer a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+footer a:hover {
+  color: #800080;
+  text-decoration: underline;
+}
+
+footer div img{
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+/*Registration page style*/
+.registration{
+  height: 500px;
+  margin-top: 5px;
+  border: 2px solid #000000;
+  background-image: url("../images/parthenon.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.registration h2{
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFFFFF;
+}
+
+#regForm{
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFFFFF;
+  /*text-align: left;*/
+  position: absolute;
+  right: 40%;/*positioning in the center of the screen*/
+  left: 40%;
+  margin: 20px;
+  max-width: 300px;
+  padding: 16px;
+  background: rgba(54, 125, 185, 0.3);/*opacity without affecting the text in the register form*/
+}
+
+/* Set a style for the submit button */
+.button {
+  background-color: #367DB9;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.button:hover {
+  opacity: 1;
 }
