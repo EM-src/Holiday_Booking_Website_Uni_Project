@@ -108,7 +108,7 @@ main img {
 
 /*Footer style*/
 footer {
-  margin-top: 0px;
+  margin: auto;
   background-color: #000000;
   text-align: center;
   text-decoration: none;
@@ -130,6 +130,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
+/*na mpoune stin akri aristera*/
 footer div img{
   width: 30px;
   height: 30px;
@@ -155,20 +156,43 @@ footer div img{
 }
 
 #regForm{
+  display: flex;
+  flex-wrap: wrap;
+  /*justify-content: center;
+  align-content: center;*/
   font-family: Arial, Helvetica, sans-serif;
   color: #FFFFFF;
-  /*text-align: left;*/
-  position: absolute;
-  right: 40%;/*positioning in the center of the screen*/
-  left: 40%;
-  margin: 20px;
-  max-width: 300px;
-  padding: 16px;
-  background: rgba(54, 125, 185, 0.3);/*opacity without affecting the text in the register form*/
+  margin: auto;
+  max-width: 600px;
+  padding: 15px;
+  background: rgba(54, 125, 185, 0.5); /*opacity without affecting the text in the register form*/
 }
 
-/* Set a style for the submit button */
+#regForm .col1{
+  margin-bottom: 20px;
+}
+
+#regForm .col2{
+  margin-bottom: 20px;
+  margin-left: auto;
+}
+
+/* Set a style for the submit button and input fields*/
+input[type=text], input[type=password] {
+  padding: 5px;
+  margin-top: 3px;
+  border: none;
+  background: #FFFFFF;
+}
+
+/*Optional*/
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #DDDDDD;
+  outline: none;
+}
+
 .button {
+  font-size: large;
   background-color: #367DB9;
   color: white;
   padding: 16px 20px;
@@ -180,4 +204,16 @@ footer div img{
 
 .button:hover {
   opacity: 1;
+}
+
+/* Error style in Registration form */
+.errors{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: larger;
+  color: #FFFFFF;
+  background: rgba(54, 125, 185, 0.5);
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+  margin-top: 20px;
 }
