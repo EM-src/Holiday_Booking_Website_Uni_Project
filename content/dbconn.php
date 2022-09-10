@@ -1,7 +1,7 @@
 <?php
 function getConnection(){
       //database connect
-      define('DB_NAME', 'usersWeek8Lab');
+      define('DB_NAME', 'finalAssignmentDB');
       define('DB_USER', 'root');
       define('DB_PASSWORD', '');
       define('DB_HOST', 'localhost');

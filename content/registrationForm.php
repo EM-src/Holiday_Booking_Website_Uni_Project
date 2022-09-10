@@ -1,23 +1,40 @@
 <?php
 require_once('contentFunctions.php');
 
-echo pageStartContent("Travel Wise", "../assets/stylesheets/styles.css");
+echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
 echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
-echo authenticationContent(array("registrationForm.php" => "Register"/*, "signIn.php" => "Sign In"*/));
+echo authenticationContent(array("registrationForm.php" => "Register"));
 ?>
 <div class="registration">
+    <h2>Registration Form</h2> <!--check later if needed as the contrast is not great-->
     <form method="post" action="registrationProcess.php" id="regForm">
-        <h2>Registration Form</h2>
-        <label for="firstname">Firstname: </label><br>
-        <input type="text" name="firstname"><br><br>
-        <label for="firstname">Surname: </label><br>
-        <input type="text" name="surname"><br><br>
-        <label for="firstname">Username: </label><br>
-        <input type="text" name="username"><br><br>
-        <label for="firstname">Password: </label><br>
-        <input type="password" name="password"><br><br>
-        <label for="firstname">Confirm Password: </label><br>
-        <input type="password" name="cpwd"><br><br>
+        <label class="col1" for="firstname">Firstname: 
+            <input type="text" name="firstname">
+        </label>
+        <label class="col2" for="surname">Surname: 
+            <input type="text" name="surname">
+        </label>
+        <label class="col1" for="address1">Address 1: 
+            <input type="text" name="address1">
+        </label>
+        <label class="col2" for="address2">Address 2: 
+            <input type="text" name="address2">
+        </label>
+        <label class="col1" for="postcode">Post Code: 
+            <input type="text" name="postcode">
+        </label>
+        <label class="col2" for="dob">Date of Birth: 
+            <input type="text" name="dob">
+        </label>
+        <label class="col1" for="username">Username: 
+            <input type="text" name="username">
+        </label>
+        <label class="col2" for="password">Password: 
+            <input type="password" name="password">
+        </label>
+        <label class="col2" for="cpwd">Confirm Password: 
+            <input type="password" name="cpwd">
+        </label>
         <button type="submit" class="button">Register</button>
         <!--<input type="submit" value="Register">-->
     </form>
