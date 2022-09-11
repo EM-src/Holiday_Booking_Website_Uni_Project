@@ -3,7 +3,7 @@ require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Home", "../assets/stylesheets/styles.css");
 echo navigationContent(array("home.php" => "Home", "accommodationListing.php" => "Accommodation Listing", "bookAccommodation.html" => "Book Accommodation", "about.html" => "About"));
-echo authenticationContent(array("registrationForm.php" => "Register", "signIn.php" => "Sign In"));
+echo authenticationContent(array("registrationForm.php" => "Register", "signInForm.php" => "Sign In"));
 
 ?>
 

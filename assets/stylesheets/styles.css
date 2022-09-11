@@ -137,29 +137,24 @@ footer div img{
   margin-right: 10px;
 }
 
+/*******************************SIMAZEMA ISOS KSEXORISTA CSS********************************/
 /*Registration page style*/
 .registration{
   height: 500px;
   margin-top: 5px;
   border: 2px solid #000000;
-  background-image: url("../images/parthenon.jpg");
+  background-image: url("../images/parthenon.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-}
-
-.registration h2{
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
 }
 
 #regForm{
   display: flex;
   flex-wrap: wrap;
-  /*justify-content: center;
-  align-content: center;*/
   font-family: Arial, Helvetica, sans-serif;
   color: #FFFFFF;
   margin: auto;
@@ -168,8 +163,9 @@ footer div img{
   background: rgba(54, 125, 185, 0.5); /*opacity without affecting the text in the register form*/
 }
 
-#regForm .col1{
+/*#regForm*/ .col1{
   margin-bottom: 20px;
+  margin-right: auto;
 }
 
 #regForm .col2{
@@ -183,9 +179,9 @@ input[type=text], input[type=password] {
   margin-top: 3px;
   border: none;
   background: #FFFFFF;
+  border-radius: 25px;
 }
 
-/*Optional*/
 input[type=text]:focus, input[type=password]:focus {
   background-color: #DDDDDD;
   outline: none;
@@ -195,11 +191,12 @@ input[type=text]:focus, input[type=password]:focus {
   font-size: large;
   background-color: #367DB9;
   color: white;
-  padding: 16px 20px;
+  padding: 10px;
   border: none;
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
+  border-radius: 25px;
 }
 
 .button:hover {
@@ -215,5 +212,31 @@ input[type=text]:focus, input[type=password]:focus {
   max-width: 600px;
   margin: auto;
   padding: 15px;
-  margin-top: 20px;
 }
+
+/*Sign In page style*/
+.signIn{
+  height: 500px;
+  margin-top: 5px;
+  border: 2px solid #000000;
+  background-image: url("../images/signIn.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  background-color: #367DB9;
+  display: flex;
+  justify-content: center;
+}
+
+#siForm{
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFFFFF;
+  margin: auto;
+  max-width: 500px;
+  padding: 15px;
+  background: rgba(54, 125, 185, 0.5); /*opacity without affecting the text in the register form*/
+}
+

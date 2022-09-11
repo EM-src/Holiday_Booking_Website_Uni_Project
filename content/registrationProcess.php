@@ -5,13 +5,13 @@ echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.cs
 echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
 
-    list($input, $errors) = validate_form();
-    if ($errors) {
-        echo "<div class=\"registration\">\n<h2>List of errors identified during registration</h2>\n<p class=\"errors\">\n".show_errors($errors)."</p>\n</div>";
-    }
-    else {
-        echo process_form($input);
-    }
+list($input, $errors) = validate_form();
+if ($errors) {
+    echo "<div class=\"registration\">\n<p class=\"errors\">\n".show_errors($errors)."</p>\n</div>";
+}
+else {
+    echo process_form($input);
+}
 ?>
 
 <?php

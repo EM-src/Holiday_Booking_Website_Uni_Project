@@ -6,7 +6,6 @@ echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
 ?>
 <div class="registration">
-    <h2>Registration Form</h2> <!--check later if needed as the contrast is not great-->
     <form method="post" action="registrationProcess.php" id="regForm">
         <label class="col1" for="firstname">Firstname: 
             <input type="text" name="firstname">
@@ -36,7 +35,6 @@ echo authenticationContent(array("registrationForm.php" => "Register"));
             <input type="password" name="cpwd">
         </label>
         <button type="submit" class="button">Register</button>
-        <!--<input type="submit" value="Register">-->
     </form>
 </div>
 
