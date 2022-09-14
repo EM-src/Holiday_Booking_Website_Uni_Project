@@ -2,8 +2,14 @@
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
-echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
+/*if (check_login()) {
+    echo authenticationContent(array("logout.php" => "Logout"));    
+}
+else {
+    echo authenticationContent(array("registrationForm.php" => "Register", "signInForm.php" => "Sign In"));
+}*/
 ?>
 <div class="registration">
     <form method="post" action="registrationProcess.php" id="regForm">
@@ -37,7 +43,6 @@ echo authenticationContent(array("registrationForm.php" => "Register"));
         <button type="submit" class="button">Register</button>
     </form>
 </div>
-
 <?php
-echo footerContent();
+echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
 ?>

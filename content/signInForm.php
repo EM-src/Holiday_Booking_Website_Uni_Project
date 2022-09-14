@@ -1,10 +1,20 @@
 <?php
+//ini_set("session.save_path", "/Applications/XAMPP/xamppfiles/sessionData");
+//session_start();
+
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Sign In", "../assets/stylesheets/styles.css");
-echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
-echo authenticationContent(array("SignInForm.php" => "Sign In"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+//echo authenticationContent(array("signInForm.php" => "Sign In"));
+if (check_login()) {
+    echo authenticationContent(array("logout.php" => "Logout"));    
+}
+else {
+    echo authenticationContent(array("SignInForm.php" => "Sign In"));
+}
 ?>
+
 <div class="signIn">
     <form method="post" action="SignInProcess.php" id="siForm">
         <label class="col1" for="username">User Name: 
@@ -18,5 +28,5 @@ echo authenticationContent(array("SignInForm.php" => "Sign In"));
 </div>
 
 <?php
-echo footerContent();
+echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
 ?>

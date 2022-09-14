@@ -14,24 +14,6 @@ function pageStartContent($pageTitle, $CSSfile){
             <img src="../assets/images/logo2.png" alt="logo"/>
             <h1>Travel Wise</h1>
     PAGESTART;
-            /*<!--Navigation links for the main functionalities-->
-            <nav>
-                <ul>
-                    <li><a href="home.php">Home</a></li>
-                    <li><a href="accommodationListing.php">Accommodation Listing</a></li>
-                    <li><a href="bookAccommodation.html">Book Accommodation</a></li>
-                    <li><a href="about.html">About</a></li>
-                </ul>
-            </nav>
-
-            <!--Sign in and Register links-->
-            <div id="logIn">
-                <ul>
-                    <li><a href="register.php">Register</a></li>
-                    <li><a href="signIn.php">Sign In</a></li>
-                </ul>
-            </div>
-        </header>*/
     $pageStart .= "\n";
     return $pageStart;
 }
@@ -62,31 +44,26 @@ function authenticationContent(array $authLinks){
     return $authenticationLinks;
 }
 
-function footerContent(){
+function footerContent(array $footerLinks){
     $pageEnd = <<< FOOTER
             <footer>
                     <ul>
-                        <li><a href="credits.html">Credits</a></li>
-                        <li><a href="wrfms.html">Wireframes and Design</a></li>
-                        <li><a href="securityReport.html">Security Report</a></li>
-                    </ul>
-                    <div id="social">
-                        <a href="https://www.facebook.com/" target="_blank"> <!--target=”_blank” opens in a new tab-->
-                            <img src="../assets/images/fb_icon.png" alt="FB logo"/>
-                        </a>
-                        <a href="https://www.instagram.com/" target="_blank">
-                            <img src="../assets/images/insta_icon.png" alt="insta logo"/>
-                        </a>
-                        <a href="https://twitter.com/" target="_blank">
-                            <img src="../assets/images/twitter_icon.png" alt="twitter logo"/>
-                        </a>
-                    </div>
-            </footer>
-        </body>
-        </html>
     FOOTER;
-    $pageEnd .= "\n";
+    foreach($footerLinks as $link => $linkText){
+        $pageEnd .= "\n<li><a href=\"$link\">$linkText</a></li>";
+    }
+    
+    $pageEnd .= "\n</ul>\n"."<div id=\"social\">\n<a href=\"https://www.facebook.com/\" target=\"_blank\">\n<img src=\"../assets/images/fb_icon.png\" alt=\"FB logo\"/>\n</a>\n<a href=\"https://www.instagram.com/\"target=\"_blank\">\n<img src=\"../assets/images/insta_icon.png\" alt=\"insta logo\"/>\n</a>\n<a href=\"https://twitter.com/\" target=\"_blank\">\n<img src=\"../assets/images/twitter_icon.png\"alt=\"twitter logo\"/>\n</a>\n</div>"."\n</footer>\n</body>\n</html>\n";
+
     return $pageEnd;
 }
 
+function check_login() {
+	if (isset($_SESSION['logged-in']) && $_SESSION['logged-in'] == "true") {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 ?>

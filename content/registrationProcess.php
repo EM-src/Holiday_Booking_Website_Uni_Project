@@ -2,12 +2,12 @@
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
-echo navigationContent(array("home.php" => "Home", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
 
 list($input, $errors) = validate_form();
 if ($errors) {
-    echo "<div class=\"registration\">\n<p class=\"errors\">\n".show_errors($errors)."</p>\n</div>";
+    echo "<div class=\"registration\">\n<p class=\"displayBox\">\n".show_errors($errors)."</p>\n</div>";
 }
 else {
     echo process_form($input);
@@ -22,7 +22,8 @@ function validate_form(){
     $input['firstname'] = array_key_exists('firstname', $_REQUEST) ? $_REQUEST['firstname'] : null;
     $input['firstname'] = trim($input['firstname']);
     if(!empty($input['firstname'])){
-        if(preg_match('/[[:punct:]]/', $input['firstname'])){
+        $input['firstname'] = filter_var($input['firstname'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        if(preg_match('/[[:punct:]]/', $input['firstname'])){ //2nd step remove any special characters
             $errors[] = "Error! Your first name must not contain any special characters.";
         }
     }
@@ -33,7 +34,8 @@ function validate_form(){
     $input['surname'] = array_key_exists('surname', $_REQUEST) ? $_REQUEST['surname'] : null;
     $input['surname'] = trim($input['surname']);
     if(!empty($input['surname'])){
-        if(preg_match('/[[:punct:]]/', $input['surname'])){
+        $input['surname'] = filter_var($input['surname'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        if(preg_match('/[[:punct:]]/', $input['surname'])){ //2nd step remove any special characters
             $errors[] = "Error! Your surname must not contain any special characters.";
         }
     }
@@ -44,7 +46,9 @@ function validate_form(){
     $input['address1'] = array_key_exists('address1', $_REQUEST) ? $_REQUEST['address1'] : null;
     $input['address1'] = trim($input['address1']);
     if(!empty($input['address1'])){
-        if(!preg_match('/^[a-zA-Z]+\s[0-9]{1,3}/', $input['address1'])){
+        $input['address1'] = filter_var($input['address1'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        $input['address1'] = filter_var($input['address1'], FILTER_SANITIZE_SPECIAL_CHARS); //2nd step remove special chars
+        if(!preg_match('/^[a-zA-Z]+\s[0-9]{1,3}/', $input['address1'])){ //3rd step make sure address start with one or more letters followed by 1-3 numbers
             $errors[] = "Error! Your Address must start with the street name follwed by space and the number.";
         }
     }
@@ -55,7 +59,9 @@ function validate_form(){
     $input['address2'] = array_key_exists('address2', $_REQUEST) ? $_REQUEST['address2'] : null;
     $input['address2'] = trim($input['address2']);
     if(!empty($input['address2'])){
-        if(!preg_match('/([a-zA-Z]|[0-9]{1,3})/', $input['address2'])){
+        $input['address2'] = filter_var($input['address2'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        $input['address2'] = filter_var($input['address2'], FILTER_SANITIZE_SPECIAL_CHARS); //2nd step escape special chars
+        if(!preg_match('/([a-zA-Z]|[0-9]{1,3})/', $input['address2'])){ //3rd step make sure address 2 field is more like a free text area
             $errors[] = "Error! Your Address 2 field should only contain letters or up to 3 numbers.";
         }
     }
@@ -63,7 +69,9 @@ function validate_form(){
     $input['postcode'] = array_key_exists('postcode', $_REQUEST) ? $_REQUEST['postcode'] : null;
     $input['postcode'] = trim($input['postcode']);
     if(!empty($input['postcode'])){
-        if(!preg_match('/([a-zA-Z]+|[0-9]+)/', $input['postcode'])){
+        $input['postcode'] = filter_var($input['postcode'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        $input['postcode'] = filter_var($input['postcode'], FILTER_SANITIZE_SPECIAL_CHARS); //2nd step escape special chars
+        if(!preg_match('/([a-zA-Z]+|[0-9]+)/', $input['postcode'])){ //3rd step make sure postcode consists of letters followed by numbers
             $errors[] = "Error! The postcode must consist of numbers and/or letters.";
         }
     }
@@ -74,7 +82,8 @@ function validate_form(){
     $input['dob'] = array_key_exists('dob', $_REQUEST) ? $_REQUEST['dob'] : null;
     $input['dob'] = trim($input['dob']);
     if(!empty($input['dob'])){
-        if(!preg_match('/^(19|20)\d{2}\/(0[1-9]|1[0-2])\/(0[1-9]|1[0-9]|2[0-9]|3[01])$/', $input['dob'])){
+        $input['dob'] = filter_var($input['dob'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        if(!preg_match('/^(19|20)\d{2}\/(0[1-9]|1[0-2])\/(0[1-9]|1[0-9]|2[0-9]|3[01])$/', $input['dob'])){//2nd step define the date format needed by the user
             $errors[] = "Error! Your date of birth must have format yyyy/mm/dd and year must start with either 19 or 20.";
         }
     }
@@ -85,7 +94,8 @@ function validate_form(){
     $input['username'] = array_key_exists('username', $_REQUEST) ? $_REQUEST['username'] : null;
     $input['username'] = trim($input['username']);
     if(!empty($input['username'])){
-        if((mb_strlen($input['username']) < 6 || mb_strlen($input['username']) > 50)){
+        $input['username'] = filter_var($input['username'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+        if((mb_strlen($input['username']) < 6 || mb_strlen($input['username']) > 50)){ //2nd step for security the username has to be between 6 and 50 chars
             $errors[] = "Error! Your user name must be between 6 and 50 characters.";
         }
     }
@@ -97,7 +107,8 @@ function validate_form(){
     $input['password'] = trim($input['password']);
     if(!empty($input['password'])){
         if((mb_strlen($input['password']) > 7)){
-            if(!preg_match('/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!%@#&*+_-])/', $input['password']))
+            $input['password'] = filter_var($input['password'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
+            if(!preg_match('/(?=.*[a-zA-Z])(?=.*\d)(?=.*[!%@#&*+_-])/', $input['password'])) //2nd step password must contain only selected special chars and must contain letters and numbers
             $errors[] = "Error! Your password must contain at least one of the following special characters 
                         '%', '!', '#', '+', '*', '$', '@', '&', '_', '-', at least one number and one letter.";
         } 
@@ -111,6 +122,7 @@ function validate_form(){
 
     $input['cpwd'] = array_key_exists('cpwd', $_REQUEST) ? $_REQUEST['cpwd'] : null;
     if(!empty($input['cpwd'])){
+        $input['cpwd'] = filter_var($input['cpwd'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
         if(!($input['cpwd'] == $input['password'])){
             $errors[] = "Error! Your password confirmation did not match the password set previously.";
         }
@@ -143,14 +155,14 @@ function process_form($input){
                 mysqli_stmt_bind_param($stmt, "ssssssss", $input['address1'], $input['address2'], $input['firstname'], $input['postcode'], $input['surname'], $input['dob'], $input['password'], $input['username']);
                 mysqli_stmt_execute($stmt);
                 $queryresult = mysqli_stmt_get_result($stmt);
-                echo "<body>User account successfully created.</body>";
+                //echo "<body>User account successfully created.</body>";
+                header('Location: signInForm.php');
             }
         }
     }
     else {
         echo "Could not prepare statement";
     }
-
     mysqli_close($conn);
 }
 
@@ -165,5 +177,5 @@ function show_errors($errors){
 ?>
 
 <?php
-echo footerContent();
+echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
 ?>
