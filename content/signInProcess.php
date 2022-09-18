@@ -8,7 +8,7 @@ require_once 'dbconn.php';
 list($input, $errors) = validate_logon(); 
 if ($errors) {
   echo pageStartContent("Travel Wise - Sign In", "../assets/stylesheets/styles.css");
-  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
   //echo authenticationContent(array("signInForm.php" => "Sign In"));
   if (check_login()) {
     echo authenticationContent(array("logout.php" => "Logout"));    

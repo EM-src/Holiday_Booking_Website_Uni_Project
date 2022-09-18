@@ -5,7 +5,7 @@ session_start();
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Credits", "../assets/stylesheets/styles.css");
-echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
 
 // using the 'logged-in' as the indicator that the user is logged in.  This was set in the login process.
 if (check_login()) {
@@ -15,8 +15,7 @@ if (check_login()) {
 }
 else {
     echo authenticationContent(array("signInForm.php" => "Sign In"));
-    echo "<p>You need to be logged in to access this page. Please use the <a href=\"signInForm.php\">Sign In</a> form to login.</p>";
-}
+    echo "<div class=\"restricted\">\n<p class=\"displayBox\">\nYou need to be logged in to access this page. Please use the <a href=\"signInForm.php\">Sign In</a> form to login.</p>\n</div>";}
 ?>
 
 <?php

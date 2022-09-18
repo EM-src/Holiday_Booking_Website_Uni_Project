@@ -5,7 +5,7 @@ session_start();
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Listings", "../assets/stylesheets/styles.css");
-echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
 
 if (check_login()) {
     echo authenticationContent(array("logout.php" => "Logout"));    
@@ -18,7 +18,7 @@ else {
 <div class="accoList">
     <form action="" method="post" id="selectAcco">
         <label for="accomodation">Select Accommodation
-            <select name="accommodation">
+            <select name="accommodationID">
             <?php
                 require_once ('dbconn.php');
                 $conn = getConnection();
@@ -44,11 +44,9 @@ else {
     <?php
 
 		
-		if (array_key_exists('accommodation',$_POST)) {
-			$accommodationID = $_POST['accommodation'];
-            //require ('dbconn.php');
-            //$conn = getConnection();
-	 
+		if (array_key_exists('accommodationID',$_POST)) {
+			$accommodationID = $_POST['accommodationID'];
+
 			$sql = "SELECT accommodationID, accommodation_name, description, location, country, price_per_night FROM accommodation WHERE accommodationID = $accommodationID";
 			$queryresult = mysqli_query($conn, $sql);
 
@@ -61,15 +59,12 @@ else {
 				$country = $currentrow['country'];
 				$price = $currentrow['price_per_night'];
 				
-                echo "<div>\n<p class=\"displayBox2\">\nName: $name, $ID\n<br>Description: $desc\n<br>Location: $location\n<br>Country: $country\n<br>Price: $price\n<br><a href=\"bookAccoForm.php?accommodationID=$ID\">Continue to Booking</a>\n</p>\n</div>";
+                echo "<div>\n<p class=\"displayBox2\">\nID: $ID\n<br>Name: $name\n<br>Description: $desc\n<br>Location: $location\n<br>Country: $country\n<br>Price: $price\n<br><a href=\"bookAccoForm.php?accommodationID=$ID\">Continue to Booking</a>\n</p>\n</div>";
             }
 			mysqli_free_result($queryresult); 
             mysqli_close($conn);
 		}
-		else {
-			//header('Location: accoListing.php');
-			exit;
-		}
+        
 	?>
 
 </div>

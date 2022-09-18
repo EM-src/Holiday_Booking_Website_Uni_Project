@@ -5,7 +5,7 @@ session_start();
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Home", "../assets/stylesheets/styles.css");
-echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
 
 if (check_login()) {
     echo authenticationContent(array("logout.php" => "Logout"));

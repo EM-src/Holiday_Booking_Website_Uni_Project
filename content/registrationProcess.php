@@ -2,7 +2,7 @@
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
-echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
 
 list($input, $errors) = validate_form();
@@ -154,8 +154,7 @@ function process_form($input){
             if($stmt = mysqli_prepare($conn, $insertQuery)){
                 mysqli_stmt_bind_param($stmt, "ssssssss", $input['address1'], $input['address2'], $input['firstname'], $input['postcode'], $input['surname'], $input['dob'], $input['password'], $input['username']);
                 mysqli_stmt_execute($stmt);
-                $queryresult = mysqli_stmt_get_result($stmt);
-                //echo "<body>User account successfully created.</body>";
+                //$queryresult = mysqli_stmt_get_result($stmt);
                 header('Location: signInForm.php');
             }
         }
@@ -171,7 +170,7 @@ function show_errors($errors){
     foreach ($errors as $err_mess){
         $output .= $err_mess."<br>"."\n";
     }
-    $output .= "Please try <a href='RegistrationForm.php'>again</a>, or click Register on the top right corner.\n";
+    $output .= "Please try <a href='registrationForm.php'>again</a>, or click Register on the top right corner.\n";
     return $output;
 }
 ?>
