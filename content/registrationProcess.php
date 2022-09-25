@@ -1,13 +1,16 @@
 <?php
+//Including the contentFunctions.php file where all the HTML text has been incorporated into functions to promote code reuse
 require_once('contentFunctions.php');
 
 echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
-echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
+echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "accoDetails.php" => "Accommodation Details", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.php" => "About"));
 echo authenticationContent(array("registrationForm.php" => "Register"));
 
+//Retrieve the arrays defined and populated by validate_form() function and display the output accordingly.
+//Either the errors in case any were found or a successfully registered user who then will be redirected in the sign in form
 list($input, $errors) = validate_form();
 if ($errors) {
-    echo "<div class=\"registration\">\n<p class=\"displayBox\">\n".show_errors($errors)."</p>\n</div>";
+    echo "<div class=\"registration\">\n<p class=\"displayBox\">\n".show_errors($errors)."</p>\n</div>\n";
 }
 else {
     echo process_form($input);
@@ -62,7 +65,7 @@ function validate_form(){
         $input['address2'] = filter_var($input['address2'], FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); //1st step remove tags to prevent XSS attack
         $input['address2'] = filter_var($input['address2'], FILTER_SANITIZE_SPECIAL_CHARS); //2nd step escape special chars
         if(!preg_match('/([a-zA-Z]|[0-9]{1,3})/', $input['address2'])){ //3rd step make sure address 2 field is more like a free text area
-            $errors[] = "Error! Your Address 2 field should only contain letters or up to 3 numbers.";
+            $errors[] = "Error! Check again your input.";
         }
     }
 
@@ -138,6 +141,7 @@ function validate_form(){
     return array ($input, $errors);
 }
 
+//If the inserted username does not already exist in DB then insert the newly registered user
 function process_form($input){
     require_once ('dbconn.php');
     $conn = getConnection();
@@ -148,13 +152,12 @@ function process_form($input){
         mysqli_stmt_execute($stmt);
         $queryresult = mysqli_stmt_get_result($stmt);
         if(mysqli_num_rows($queryresult) > 0){
-            echo "User name entered not unique.";
+            echo "<div class=\"registration\">\n<p class=\"displayBox\">\nUser name entered not unique. Kindly <a href=\"registrationForm.php\">Register</a> again</p>\n</div>\n";
         }
         else {
             if($stmt = mysqli_prepare($conn, $insertQuery)){
                 mysqli_stmt_bind_param($stmt, "ssssssss", $input['address1'], $input['address2'], $input['firstname'], $input['postcode'], $input['surname'], $input['dob'], $input['password'], $input['username']);
                 mysqli_stmt_execute($stmt);
-                //$queryresult = mysqli_stmt_get_result($stmt);
                 header('Location: signInForm.php');
             }
         }
@@ -176,5 +179,6 @@ function show_errors($errors){
 ?>
 
 <?php
-echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
+//Insert footer at the end of the page
+echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.php" => "Security Report", "features.php" => "Features"));
 ?>

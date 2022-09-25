@@ -1,40 +1,43 @@
 <?php
-ini_set("session.save_path", "/Applications/XAMPP/xamppfiles/sessionData");
-session_start();
+ini_set("session.save_path", "/home/unn_w21050558/sessionData"); //Session save file directory
+session_start();                                                 //Continuing or starting session
 
+//Including the contentFunctions.php file where all the HTML text has been incorporated into functions to promote code reuse
 require_once 'contentFunctions.php';
+//Include file for connection to DB
 require_once 'dbconn.php';
 
-list($input, $errors) = validate_logon(); 
+list($input, $errors) = validate_logon();
 if ($errors) {
+  //If there are errors set the page content and display the errors that were identified during the processing of the sign in form
   echo pageStartContent("Travel Wise - Sign In", "../assets/stylesheets/styles.css");
-  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.html" => "About"));
-  //echo authenticationContent(array("signInForm.php" => "Sign In"));
+  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "accoDetails.php" => "Accommodation Details", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.php" => "About"));
   if (check_login()) {
-    echo authenticationContent(array("logout.php" => "Logout"));    
+    echo authenticationContent(array("logout.php" => "Logout"));
   }
   else {
-    echo authenticationContent(array("SignInForm.php" => "Sign In"));
+    echo authenticationContent(array("signInForm.php" => "Sign In"));
   }
 
   echo show_errors($errors);
-  echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
+  echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.php" => "Security Report", "features.php" => "Features"));
 }
 else {
+  //If there are no errors set the page content also define teh session values so the user can be identified during their HTTP requests
+  //to the server and display a successfully logged in message
   $_SESSION['logged-in'] = "true";
   $_SESSION['user'] = $input['username'];
-  echo pageStartContent("Travel Wise - Register", "../assets/stylesheets/styles.css");
-  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "bookAccoForm.php" => "Book Accommodation", "about.html" => "About"));
-  //echo authenticationContent(array("registrationForm.php" => "Register"));
+  echo pageStartContent("Travel Wise - Sign In", "../assets/stylesheets/styles.css");
+  echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accommodation Listing", "accoDetails.php" => "Accommodation Details", "bookAccoForm.php" => "Book Accommodation", "myBookings.php" => "Upcoming Bookings", "about.php" => "About"));
   if (check_login()) {
-    echo authenticationContent(array("logout.php" => "Logout"));    
+    echo authenticationContent(array("logout.php" => "Logout"));
   }
   else {
-    echo authenticationContent(array("SignInForm.php" => "Sign In"));
+    echo authenticationContent(array("signInForm.php" => "Sign In"));
   }
 
   echo "<div class=\"signIn\">\n<p class=\"displayBox\">\nLogon success! You now have access on all website content,<br>please use the navigation menu to find out more!</p>\n</div>";
-  echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.html" => "Security Report"));
+  echo footerContent(array("credits.php" => "Credits", "wrfms.php" => "Wireframes", "securityReport.php" => "Security Report", "features.php" => "Features"));
 }
 
 function validate_logon(){
@@ -52,13 +55,17 @@ function validate_logon(){
 		$errors[] = "You need to provide a username and a password.";
 	}
 	else {
-		// Clear any session setting that might be left from a previous session
+		//Clear any session setting that might be left from a previous session
 		unset($_SESSION['logged-in']);
     unset($_SESSION['user']);
 
-    //require_once 'dbconn.php';
+    //define the connection variable
     $conn = getConnection();
 
+    //Retrieve the password hash in the DB for the username entered in the sign in form
+    //Check that it matches the password given with the password_verify() function
+    //Depending on outcome display the appropriate message but without telling the user
+    //where the mismatch was in case of error for security reasons
     $query = "SELECT password_hash FROM customers WHERE username = ?";
     if($stmt = mysqli_prepare($conn, $query)){
       mysqli_stmt_bind_param($stmt, "s", $input['username']);

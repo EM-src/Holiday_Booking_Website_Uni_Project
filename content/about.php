@@ -1,6 +1,6 @@
 <?php
-ini_set("session.save_path", "/Applications/XAMPP/xamppfiles/sessionData"); //Session save file directory
-session_start();                                                            //Continuing or starting session
+ini_set("session.save_path", "/home/unn_w21050558/sessionData"); //Session save file directory
+session_start();                                                 //Continuing or starting session
 
 //Including the contentFunctions.php file where all the HTML text has been incorporated into functions to promote code reuse
 require_once('contentFunctions.php');
@@ -25,7 +25,7 @@ else {
            <span>Student ID: </span> 21050558<br><br>
            <span>Professor: </span>Dr Emma Anderson<br><br><br><br>
            A web solution submitted as partial fulfilment of<br>the requirements for course PE7045 - Secure Web Development<br><br><br><br>
-           at<br>Northumbria University<br>September 2022 
+           at<br>Northumbria University<br>September 2022
         </p>
     </div>
 

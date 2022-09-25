@@ -1,6 +1,6 @@
 <?php
-ini_set("session.save_path", "/Applications/XAMPP/xamppfiles/sessionData"); //Session save file directory
-session_start();                                                            //Continuing or starting session
+ini_set("session.save_path", "/home/unn_w21050558/sessionData"); //Session save file directory
+session_start();                                                 //Continuing or starting session
 
 //Including the contentFunctions.php file where all the HTML text has been incorporated into functions to promote code reuse
 require_once('contentFunctions.php');

@@ -1,4 +1,5 @@
 <?php
+//For all HTML content functions use mainly heredoc to insert the HTML tags and return the output
 function pageStartContent($pageTitle, $CSSfile){
     $pageStart = <<< PAGESTART
     <!--PE7045 - Final Assignment-->
@@ -53,7 +54,7 @@ FOOTER;
         $pageEnd .= "\n<li><a href=\"$link\">$linkText</a></li>";
     }
     
-    $pageEnd .= "\n</ul>\n"."<div id=\"social\">\n<a href=\"https://www.facebook.com/\" target=\"_blank\">\n<img src=\"../assets/images/fb_icon.png\" alt=\"FB logo\"/>\n</a>\n<a href=\"https://www.instagram.com/\"target=\"_blank\">\n<img src=\"../assets/images/insta_icon.png\" alt=\"insta logo\"/>\n</a>\n<a href=\"https://twitter.com/\" target=\"_blank\">\n<img src=\"../assets/images/twitter_icon.png\"alt=\"twitter logo\"/>\n</a>\n</div>"."\n</footer>\n</body>\n</html>\n";
+    $pageEnd .= "\n</ul>\n"."<div id=\"social\">\n<a href=\"https://www.facebook.com/\" target=\"_blank\">\n<img src=\"../assets/images/fb_icon.png\" alt=\"FB logo\"/>\n</a>\n<a href=\"https://www.instagram.com/\" target=\"_blank\">\n<img src=\"../assets/images/insta_icon.png\" alt=\"insta logo\"/>\n</a>\n<a href=\"https://twitter.com/\" target=\"_blank\">\n<img src=\"../assets/images/twitter_icon.png\" alt=\"twitter logo\"/>\n</a>\n</div>"."\n</footer>\n</body>\n</html>\n";
 
     return $pageEnd;
 }
@@ -67,12 +68,9 @@ function check_login() {
 	}
 }
 
-function dateDiffInDays($date1, $date2) 
-{
-    // Calculating the difference in timestamps
+//Function to calculate teh date difference in days
+function dateDiffInDays($date1, $date2) {
     $diff = strtotime($date2) - strtotime($date1);
-
-    // 1 day = 24 hours
     // 24 * 60 * 60 = 86400 seconds
     return abs(round($diff / 86400));
 }
@@ -82,21 +80,26 @@ function accoForm(){
         <div class="booking">
             <form action="bookAccoProcess.php" method="post" id="selectAcco">
                 <label for="accommodation">Select Accommodation
-                    <select name="accommodation">
+                    <select name="accommodation" id="accommodation">
 START;
+                        //The following part ensures that when a customer selects an accommodation from the accommodation details page
+                        //and clicks on continue to booking link, the ID of their selected accommodation will populate the
+                        //select accommodation field in the book accommodation form and will be as read only
+                        //However if the user goes straight into the book accommodation page they will be able to freely choose
+                        //the accommodation of their liking
                         $url = "";
                         $url .= $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-                        $url = filter_var($url, FILTER_SANITIZE_URL); // remove all illegal URL characters
+                        $url = filter_var($url, FILTER_SANITIZE_URL); //remove all illegal URL characters
                         if(preg_match('/[0-9]/',substr($url, -1))){
                             require_once ('dbconn.php');
                             $conn = getConnection();
                             $accommodationID = 0;
-                            // Check accommodationID has been passed in and is an integer only
+                            //Check accommodationID has been passed in
                             if(array_key_exists('accommodationID', $_REQUEST )){
-                                //check accommodationID is int
+                                //check accommodationID is integer
                                 $accommodationID = intval($_REQUEST['accommodationID']);
-                                //echo "<p>Accommodation ID: $accommodationID </p>";
-
+                                
+                                
                                 $sql = "SELECT accommodation_name FROM accommodation WHERE accommodationID = $accommodationID";
                                 $queryresult = mysqli_query($conn, $sql);
                                 if ($queryresult) {
@@ -131,22 +134,19 @@ START;
                     </select>
                 </label>
                 <label for="start_date">Start Date
-                    <input type="text" name="start_date">
+                    <input type="text" name="start_date" id="start_date">
                 </label>
                 <label for="end_date">End Date
-                    <input type="text" name="end_date">
+                    <input type="text" name="end_date" id="end_date">
                 </label>
                 <label for="num_guests">Number of Guests
-                    <input type="number" name="num_guests">
+                    <input type="number" name="num_guests" id="num_guests">
                 </label>
 MIDDLE;
 $accoFormFull .= $accoFormMiddle;
-//                $accoFormFull .= "<label for=\"total_booking_cost\">Total Cost\n";
-//                $accoFormFull .= "<input type=\"text\" name=\"total_booking_cost\" readonly>\n";
-//                $accoFormFull .= "</label>\n";
     $accoFormEnd =<<<END
                 <label for="booking_notes">Booking Notes
-                    <textarea name="booking_notes"></textarea>
+                    <textarea name="booking_notes" id="booking_notes"></textarea>
                 </label>
                 <button type="submit" class="button">Book Now</button>
             </form>
@@ -158,17 +158,14 @@ $accoFormFull .= $accoFormEnd;
 return $accoFormFull;
 }
 
+//Display the booking confirmation
 function confirmation($cnx, $ipt){
     $accommodationID = $ipt['accommodation'];
-    //$userID = $ipt['customerID'];
-    //$sql = "SELECT b.bookingID, customerID, a.accommodation_name, b.start_date, b.end_date, b.num_guests, b.total_booking_cost FROM accommodation a INNER JOIN booking b ON a.accommodationID = b.accommodationID 
-    //WHERE a.accommodationID = $accommodationID AND b.customerID = $userID AND b.bookingID = (SELECT MAX(bookingID) FROM booking)";
     $sql = "SELECT b.bookingID, a.accommodation_name, b.start_date, b.end_date, b.num_guests, b.total_booking_cost FROM accommodation a INNER JOIN booking b ON a.accommodationID = b.accommodationID 
     WHERE a.accommodationID = $accommodationID AND b.bookingID = (SELECT MAX(bookingID) FROM booking)";
     $queryresult = mysqli_query($cnx, $sql);
     if ($queryresult) {
         $currentrow = mysqli_fetch_assoc($queryresult);
-        //$un = $currentrow['customerID'];
         $bookingID = $currentrow['bookingID'];
         $accoName = $currentrow['accommodation_name'];
         $sD = substr($currentrow['start_date'],0,10);
@@ -176,8 +173,7 @@ function confirmation($cnx, $ipt){
         $cost = $currentrow['total_booking_cost'];
         $guests = $currentrow['num_guests'];
         
-        //echo "<div>\n<p class=\"displayBox2\">\nAccommodation Name: $accoName\n<br>Start Date: $sD\n<br>End Date: $eD\n<br>Number of Guests: $guests\n<br>Total Cost: $cost\n<br></p>\n</div>";
-        $confirmationMessage = "Booking ID: $bookingID\n<br>Accommodation Name: $accoName\n<br>Start Date: $sD\n<br>End Date: $eD\n<br>Number of Guests: $guests\n<br>Total Cost: $cost\n<br>";
+        $confirmationMessage = "Booking ID: $bookingID\n<br>Accommodation Name: $accoName\n<br>Start Date: $sD\n<br>End Date: $eD\n<br>Number of Guests: $guests\n<br>Total Cost: $cost\n<br><br>You will be redirected in the booking form in 5 seconds\n<br>";
 
     }
     mysqli_free_result($queryresult); 

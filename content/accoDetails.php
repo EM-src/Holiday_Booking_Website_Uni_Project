@@ -1,6 +1,6 @@
 <?php
-ini_set("session.save_path", "/Applications/XAMPP/xamppfiles/sessionData"); //Session save file directory
-session_start();                                                            //Continuing or starting session
+ini_set("session.save_path", "/home/unn_w21050558/sessionData"); //Session save file directory
+session_start();                                                 //Continuing or starting session
 
 //Including the contentFunctions.php file where all the HTML text has been incorporated into functions to promote code reuse
 require_once('contentFunctions.php');
@@ -12,7 +12,7 @@ echo navigationContent(array("index.php" => "Home", "accoListing.php" => "Accomm
 //Additionally since this is a restricted page, a relevant message and a Sign In redirection link will be shown to
 //unauthorized users. The exit() php function is used to end the script in case of an unauthorized access attempt so the HTML part will not be shown
 if (check_login()) {
-    echo authenticationContent(array("logout.php" => "Logout"));    
+    echo authenticationContent(array("logout.php" => "Logout"));
 }
 else {
     echo authenticationContent(array("registrationForm.php" => "Register", "signInForm.php" => "Sign In"));
@@ -48,7 +48,7 @@ else {
         </label>
         <button type="submit" class="button">Show</button>
     </form>
-    
+
     <?php
         //for the selected accommodation ID all required information will be displayed to the user in a display box (separate container)
 		if (array_key_exists('accommodationID',$_POST)) {
@@ -65,13 +65,13 @@ else {
 				$location = $currentrow['location'];
 				$country = $currentrow['country'];
 				$price = $currentrow['price_per_night'];
-				
+
                 echo "<div>\n<p class=\"displayBox2\">\nID: $ID\n<br>Name: $name\n<br>Description: $desc\n<br>Location: $location\n<br>Country: $country\n<br>Price: $price\n<br><a href=\"bookAccoForm.php?accommodationID=$ID\">Continue to Booking</a>\n</p>\n</div>";
             }
-			mysqli_free_result($queryresult); 
+			mysqli_free_result($queryresult);
             mysqli_close($conn);
 		}
-        
+
 	?>
 
 </div>
